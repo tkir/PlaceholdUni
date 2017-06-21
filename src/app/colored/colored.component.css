@@ -1,0 +1,16 @@
+.colored{
+    width: 390px;
+    font-size: 0;
+}
+
+.colored img{
+    display: inline-block;
+}
+
+.colored img:first-child{
+    margin-bottom: 10px;
+}
+
+.colored img:last-child{
+    margin-left: 10px;
+}

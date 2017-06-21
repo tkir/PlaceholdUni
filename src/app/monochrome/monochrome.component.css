@@ -1,0 +1,16 @@
+.monochrome{
+    width: 390px;
+    font-size: 0;
+}
+
+.monochrome img{
+    display: inline-block;
+}
+
+.monochrome img:first-child{
+    margin-bottom: 10px;
+}
+
+.monochrome img:last-child{
+    margin-left: 10px;
+}

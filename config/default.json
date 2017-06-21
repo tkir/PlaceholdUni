@@ -1,0 +1,14 @@
+{
+  "Image": {
+    "minWidth": 30,
+    "minHeight": 20,
+    "maxWidth": 1024,
+    "maxHeight": 768,
+    "background": "cccccc",
+    "color": "969696",
+    "font": "Futura",
+
+    "path":"/src/images",
+    "dotfiles": "deny"
+  }
+}
