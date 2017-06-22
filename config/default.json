@@ -10,5 +10,14 @@
 
     "path":"/src/images",
     "dotfiles": "deny"
+  },
+
+  "Picture":{
+    "Flickr":{
+      "Port": "443",
+      "url": "api.flickr.com/services/rest/?",
+      "Key": "046aeef0c02d3a3ef836fec10ac4a5e1",
+      "Secret": "95b7a9511887035b"
+    }
   }
 }

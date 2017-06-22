@@ -1,16 +1,29 @@
-import {ImageParams} from "./ImageParams";
-let Jimp = require("jimp");
+import {Photo} from "./Photo";
+let getJSONlib = require('get-json');
 let config = require('config');
-let root = require('app-root-dir').get();
 
-export function resizeImage(params, callback) {
-  let image = new Jimp(params.width, params.height, parseInt(`0x${params.background}ff`, 16),
-      (err, buffer: Buffer) => Jimp.read(buffer,
-        (err, txtPNG) => image.blit(txtPNG, params.paddingLeft, params.paddingTop,
-          (err, image) => image.write(`${root}/${config.get('Image.path')}/${params.filename}`,
-            (err, image) => {console.log(err);callback(`${root}/${config.get('Image.path')}/${params.filename}`)
-            ;})
-        )
-      )
-  );
+let options = {
+  base: 'https://api.flickr.com/services/rest/?',
+  method: 'method=flickr.photos.search',
+  text: 'text=cat',
+  license: '4%2C5%2C6%2C7',
+  format: 'format=json&nojsoncallback=1'
+};
+
+export function getPicture(cb) {
+  getJSONlib('https://api.flickr.com/services/rest/?' +
+    'method=flickr.photos.search' +
+    '&api_key=046aeef0c02d3a3ef836fec10ac4a5e1' +
+    '&text=mam' +
+    '&license=4%2C5%2C6' +
+    '&sort=relevance' +
+    '&format=json&nojsoncallback=1',
+    (err, response) => {
+      if (err) cb(err, null);
+      else cb(null, getPhoto(response.photos.photo[9]));
+    });
+}
+
+function getPhoto(photo: Photo): string {
+  return `http://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`;
 }

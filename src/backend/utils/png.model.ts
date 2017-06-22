@@ -20,16 +20,19 @@ export function createPNG(params: ImageParams, callback) {
       (err, buffer: Buffer) => Jimp.read(buffer,
         (err, txtPNG) => image.blit(txtPNG, params.paddingLeft, params.paddingTop,
           (err, image) => image.write(`${root}/${config.get('Image.path')}/${params.filename}`,
-            (err, image) => {console.log(err);callback(`${root}/${config.get('Image.path')}/${params.filename}`)
-            ;})
+            (err, image) => {
+              console.log(err);
+              callback(`${root}/${config.get('Image.path')}/${params.filename}`)
+              ;}
+          )
+        )
       )
     )
-  )
-);
+  );
 }
 
 function createTextBuffer(params: ImageParams, cb) {
-  try{
+  try {
     cb(null, text2png(`${params.width} x ${params.height}`,
       {
         textColor: `#${params.color}`,
