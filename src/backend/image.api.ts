@@ -1,31 +1,28 @@
 let router = require('express').Router();
 let config = require('config');
-import {ImageParams, ImageOptions} from './utils/ImageParams'
 let fs = require('fs');
 let root = require('app-root-dir').get();
 
-import {createPNG} from './utils/png.model';
-
-let imageParams: ImageParams;
-let imageOptions: ImageOptions;
-
-router.get('*',(req, res, next) => {
-  imageParams = new ImageParams(req.originalUrl);
-  imageOptions = new ImageOptions();
-
-  next();
-});
-
-router.get('*', function (req, res, next) {
-  fs.access(`${root}/${config.get('Image.path')}/${imageParams.filename}`,
-    (err) => {
-      if (!err) res.sendFile(imageParams.filename, imageOptions);
-      else next();
-    });
-});
+import {ImageModel, ImageOptions} from './utils/image.model';
 
 router.get('*', function (req, res) {
-  createPNG(imageParams, (path) => {console.log('after create');res.sendFile(imageParams.filename, imageOptions);});
+
+  let model = new ImageModel(req.originalUrl);
+  let imageOptions = new ImageOptions();
+
+  fs.access(`${root}/${config.get('Image.path')}/${model.filename}`,
+    (err) => {
+      if (!err) res.sendFile(model.filename, imageOptions);
+      else {
+        model.createPNG((err, buffer: Buffer) => {
+          if (err) console.error(err);
+
+          res.contentType('image/jpeg');
+          res.end(buffer, 'binary');
+        });
+      }
+    });
+
 });
 
 
