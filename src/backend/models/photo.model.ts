@@ -1,6 +1,8 @@
 let config = require('config');
 let root = require('app-root-dir').get();
 let getJSONlib = require('get-json');
+let Jimp = require("jimp");
+let request = require('request');
 
 export class Photo {
   public id: string;
@@ -64,15 +66,24 @@ export class PhotoModel {
         if (err) this.error = err;
         else this.photos = response.photos.photo;
 
-        cb();
+        this.getPhotoBuffer(this.randPhoto,
+          (err, buffer:Buffer)=>{
+          //TODO save into mongoDB, if new request with the same params return from db!
+
+            cb(err, buffer);
+          });
+
+
+
+
       });
   }
 
   public getSinglePhoto(cb) {
     if (this.photos !== null || this.error !== null)
-      cb(this.error, this.getPhotoURL(this.photos[this.rand]) || null);
+      cb(this.error, this.getPhotoURL(this.randPhoto));
     else {
-      this.getPhotos(() => cb(this.error, this.getPhotoURL(this.photos[this.rand]) || null));
+      this.getPhotos((err, buffer) => cb(err, buffer));
     }
   }
 
@@ -89,13 +100,22 @@ export class PhotoModel {
     }
   }
 
-  private get rand() {
+  private get randPhoto(): Photo {
     if (this.photos !== null)
-      return Math.floor(0 + Math.random() * this.photos.length);
-    return -1;
+      return this.photos[Math.floor(0 + Math.random() * this.photos.length)];
+    return null;
   }
 
   private getPhotoURL(photo: Photo): string {
+    if (!photo) return null;
     return `http://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
+  }
+
+  private getPhotoBuffer(photo: Photo, cb) {
+    Jimp.read(this.getPhotoURL(photo),
+      (err, image)=>image.cover(this.width, this.height,
+        (err, image) => image.getBuffer(Jimp.MIME_PNG,
+          (err, buffer) => cb(err || null, buffer)
+        )));
   }
 }
