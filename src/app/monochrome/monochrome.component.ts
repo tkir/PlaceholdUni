@@ -15,7 +15,7 @@ export class MonochromeComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subs = this.imageService.getImage('200x200')
-            .subscribe(res => console.log(res));
+            .subscribe();
     }
 
     ngOnDestroy() {

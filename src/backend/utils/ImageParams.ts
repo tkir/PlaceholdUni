@@ -14,7 +14,7 @@ export class ImageParams {
   public color: string;
   public filename: string;
 
-  constructor(url) {
+  constructor(url:string) {
     this.url = url;
 
     this.font = 70;

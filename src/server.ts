@@ -67,12 +67,12 @@ app.use(cacheControl, express.static(path.join(ROOT, 'dist/client'), {index: fal
 import {serverApi, createTodoApi} from './backend/api';
 import {createTextApi} from './backend/text.api';
 let imageApi = require('./backend/image.api');
-let pictureApi=require('./backend/picture.api');
+let photoApi=require('./backend/photo.api');
 
 // Our API for demos only
 app.get('/data.json', serverApi);
 app.use(/\/[0-9]+x[0-9]+/i, imageApi);
-app.use(/\/picture/i, pictureApi);
+app.use(/\/photo\/[0-9]+x[0-9]+/i, photoApi);
 app.use('/api/text', createTextApi());
 app.use('/api', createTodoApi());
 

@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 
-import {PictureComponent} from './picture.component';
+import {PhotoComponent} from './photo.component';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
-            {path: 'picture', component: PictureComponent}
+            {path: 'photo', component: PhotoComponent}
         ])
     ]
 })
-export class PictureRoutingModule {
+export class PhotoRoutingModule {
 }

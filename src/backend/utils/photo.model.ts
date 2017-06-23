@@ -10,7 +10,7 @@ let options = {
   format: 'format=json&nojsoncallback=1'
 };
 
-export function getPicture(cb) {
+export function getPhoto(cb) {
   getJSONlib('https://api.flickr.com/services/rest/?' +
     'method=flickr.photos.search' +
     '&api_key=046aeef0c02d3a3ef836fec10ac4a5e1' +
@@ -20,10 +20,10 @@ export function getPicture(cb) {
     '&format=json&nojsoncallback=1',
     (err, response) => {
       if (err) cb(err, null);
-      else cb(null, getPhoto(response.photos.photo[9]));
+      else cb(null, getPhotoURL(response.photos.photo[9]));
     });
 }
 
-function getPhoto(photo: Photo): string {
-  return `http://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`;
+function getPhotoURL(photo: Photo): string {
+  return `http://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
 }
