@@ -6,7 +6,7 @@ import { TextComponent } from './text.component';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: 'text', component: TextComponent }
+            { path: 'lorem', component: TextComponent }
         ])
     ]
 })

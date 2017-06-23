@@ -6,7 +6,7 @@ import {ApiService} from '../api.service';
 
 @Injectable()
 export class TextService {
-    private path: string = '/api/text';
+    private path: string = '/text';
 
     constructor(public _api: ApiService) {
     }

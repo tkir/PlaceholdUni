@@ -13,6 +13,6 @@ export const routes: string[] = [
     'monochrome',
     'colored',
     'photo',
-    'text',
+    'lorem',
     'list',
 ];

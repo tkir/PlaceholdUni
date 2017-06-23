@@ -69,7 +69,7 @@ let photoApi=require('./backend/photo.api');
 
 app.use(/\/[0-9]+x[0-9]+/i, imageApi);
 app.use(/\/photo\/[0-9]+x[0-9]+/i, photoApi);
-app.use('/api/text', textApi());
+app.use(/\/text/i, textApi);
 
 process.on('uncaughtException', function (err) {
   console.error('Catching uncaught errors to avoid process crash', err);
