@@ -1,6 +1,6 @@
 let router = require('express').Router();
 
-import {PhotoModel} from './utils/Photo';
+import {PhotoModel} from './models/photo.model';
 
 router.get('*', (req, res) => {
 

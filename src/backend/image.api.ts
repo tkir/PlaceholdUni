@@ -3,7 +3,7 @@ let config = require('config');
 let fs = require('fs');
 let root = require('app-root-dir').get();
 
-import {ImageModel, ImageOptions} from './utils/image.model';
+import {ImageModel, ImageOptions} from './models/image.model';
 
 router.get('*', function (req, res) {
 

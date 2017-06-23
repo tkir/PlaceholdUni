@@ -62,19 +62,14 @@ app.use(cacheControl, express.static(path.join(ROOT, 'dist/client'), {index: fal
 
 //
 /////////////////////////
-// ** Example API
-// Notice API should be in aseparate process
-import {serverApi, createTodoApi} from './backend/api';
-import {createTextApi} from './backend/text.api';
+// ** APIs **
+let textApi = require('./backend/text.api');
 let imageApi = require('./backend/image.api');
 let photoApi=require('./backend/photo.api');
 
-// Our API for demos only
-app.get('/data.json', serverApi);
 app.use(/\/[0-9]+x[0-9]+/i, imageApi);
 app.use(/\/photo\/[0-9]+x[0-9]+/i, photoApi);
-app.use('/api/text', createTextApi());
-app.use('/api', createTodoApi());
+app.use('/api/text', textApi());
 
 process.on('uncaughtException', function (err) {
   console.error('Catching uncaught errors to avoid process crash', err);
