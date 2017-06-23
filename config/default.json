@@ -21,5 +21,8 @@
     "maxWidth": 1024,
     "maxHeight": 768,
     "defaultTheme": "cat"
+  },
+  "Text":{
+    "count":4
   }
 }

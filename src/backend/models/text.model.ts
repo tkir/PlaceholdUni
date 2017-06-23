@@ -1,10 +1,19 @@
+let config = require('config');
 let loremIpsum = require('lorem-ipsum');
 
 export class TextModel {
-  private count:number=20;
+  private count: number;
+  private url: string;
 
   constructor(url) {
+    this.url = url;
 
+    this.url = this.url.trim();
+    if (this.url.charAt(0) === '/')
+      this.url = this.url.substr(1);
+
+    let params = this.url.split('/');
+    this.count = +params[1] || config.get('Text.count');
   }
 
   // private options = {
@@ -22,7 +31,12 @@ export class TextModel {
 
 
   public getText(cb) {
-    cb(null, loremIpsum());
+    let lorem = loremIpsum({
+      count: this.count
+    });
+    let text = 'Lorem ipsum ' + lorem[0].toLowerCase() + lorem.slice(1);
+
+    cb(null, text);
   }
 }
 
