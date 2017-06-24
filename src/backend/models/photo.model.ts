@@ -67,16 +67,13 @@ export class PhotoModel {
         else this.photos = response.photos.photo;
 
         this.getPhotoBuffer(this.randPhoto,
-          (err, buffer:Buffer)=>{
-          //TODO save into mongoDB, if new request with the same params return from db!
+          (err, buffer: Buffer) => {
+            //TODO save into mongoDB, if new request with the same params return from db!
 
             cb(err, buffer);
           });
-
-
-
-
-      });
+      }
+    );
   }
 
   public getSinglePhoto(cb) {
@@ -102,7 +99,7 @@ export class PhotoModel {
 
   private get randPhoto(): Photo {
     if (this.photos !== null)
-      return this.photos[Math.floor(0 + Math.random() * this.photos.length)];
+      return this.photos[Math.floor(0 + Math.random() * /*this.photos.length*/20)];
     return null;
   }
 
@@ -113,7 +110,7 @@ export class PhotoModel {
 
   private getPhotoBuffer(photo: Photo, cb) {
     Jimp.read(this.getPhotoURL(photo),
-      (err, image)=>image.cover(this.width, this.height,
+      (err, image) => image.cover(this.width, this.height,
         (err, image) => image.getBuffer(Jimp.MIME_PNG,
           (err, buffer) => cb(err || null, buffer)
         )));
