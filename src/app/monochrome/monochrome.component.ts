@@ -3,25 +3,33 @@ import {ImageService} from "../shared/model/image.service";
 import {Subscription} from "rxjs";
 
 @Component({
-    selector: 'app-monochrome',
-    templateUrl: './monochrome.component.html',
-    styleUrls: ['./monochrome.component.css']
+  selector: 'app-monochrome',
+  templateUrl: './monochrome.component.html',
+  styleUrls: ['./monochrome.component.css']
 })
 export class MonochromeComponent implements OnInit, OnDestroy {
-    private subs: Subscription = null;
+  private subs: Subscription[] = [];
 
-    constructor(private imageService: ImageService) {
-    }
+  img360x120: string = '';
+  img100x100: string = '';
+  img250x100: string = '';
 
-    ngOnInit() {
-        this.subs = this.imageService.getImage('200x200')
-            .subscribe();
-    }
+  constructor(private imageService: ImageService) {
+  }
 
-    ngOnDestroy() {
-        if (this.subs) {
-            this.subs.unsubscribe();
-            this.subs = null;
-        }
+  ngOnInit() {
+    this.subs.push(this.imageService.getImage('360x120')
+      .subscribe(res => this.img360x120 = res.url));
+    this.subs.push(this.imageService.getImage('100x100')
+      .subscribe(res => this.img100x100 = res.url));
+    this.subs.push(this.imageService.getImage('250x100')
+      .subscribe(res => this.img250x100 = res.url));
+  }
+
+  ngOnDestroy() {
+    if (this.subs) {
+      this.subs.forEach(s => s.unsubscribe());
+      this.subs = [];
     }
+  }
 }
