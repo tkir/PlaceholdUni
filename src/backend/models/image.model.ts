@@ -21,11 +21,26 @@ export class ImageModel {
   constructor(url: string) {
     this.url = url;
 
-    this.font = 70;
+    this.font = 220;
     this.paddingTop = 0;
     this.paddingLeft = 0;
 
-    this.setImageParams()
+    this.setImageParams();
+    this.calculateFont();
+  }
+
+  private calculateFont() {
+    this.font = (this.width * 0.75) / (0.79 + 0.61 * ((this.width.toString() + this.height.toString())).length);
+    if (this.font * 0.75 < this.height * 0.8) {
+      this.paddingLeft = this.width * 0.125;
+    } else {
+      this.font = (this.height * 0.8) / 0.75;
+      this.paddingLeft = (this.width
+                          - this.font
+                          * ( 0.79 + 0.61 * ((this.width.toString() + this.height.toString())).length))
+                          / 2;
+    }
+    this.paddingTop = (this.height - this.font * 0.75) / 2
   }
 
   private setImageParams() {
